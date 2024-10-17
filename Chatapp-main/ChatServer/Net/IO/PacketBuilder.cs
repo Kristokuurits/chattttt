@@ -21,9 +21,10 @@ namespace ChatServer.Net.IO
 
         public void WriteMessage(string msg)
         {
-            var msgLenght = msg.Length;
-            _ms.Write(BitConverter.GetBytes(msgLenght));
-            _ms.Write(Encoding.ASCII.GetBytes(msg));
+            var msgBytes = Encoding.ASCII.GetBytes(msg);
+            var msgLength = msgBytes.Length;
+            _ms.Write(BitConverter.GetBytes(msgLength));
+            _ms.Write(msgBytes);
         }
 
         public byte[] GetPacketBytes()
