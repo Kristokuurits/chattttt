@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using Chat0.Net.IO;
 
-namespace Chat0.net
+namespace ChatClient.Net
 {
     class Server
     {
@@ -56,6 +56,10 @@ namespace Chat0.net
                             break;
                         case 10:
                             userDisconnectedEvent?.Invoke();
+                            break;
+
+                        default:
+                            Console.WriteLine("ah yes..");
                             break;
                     }
                 }
