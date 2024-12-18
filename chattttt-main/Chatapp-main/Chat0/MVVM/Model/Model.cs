@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChatApp.MVVM.Model
 {
-    class Model
+    class UserModel
     {
-        public string Username { get; set; }
-        public string UID { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string UID { get; set; } = string.Empty;
     }
 }

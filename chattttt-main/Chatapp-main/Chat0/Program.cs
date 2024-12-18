@@ -5,21 +5,33 @@ using System.Net.Sockets;
 using System.Xml.Linq;
 using Chat0.MVVM.ViewModel;
 
-namespace Chat0
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Nimi: ");
-            string name = Console.ReadLine();
-            MainViewModel MainViewModel = new MainViewModel(name);
 
-            while (true)
+class Program
+{
+
+
+    static void Main()
+    {
+        Console.WriteLine("Enter name NOWWWWW, to connect");
+        var name = Console.ReadLine();
+        var message = string.Empty;
+        var input = new MainViewModel(name);
+
+
+        while (true)
+        {
+            message = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(message))
             {
-                string message = Console.ReadLine();
-                MainViewModel.SendMessage(message);
+                input.SendMessage(message);
+            }
+            else
+            {
+                Console.WriteLine("Message cannot be empty.");
             }
         }
+
+
+
     }
 }

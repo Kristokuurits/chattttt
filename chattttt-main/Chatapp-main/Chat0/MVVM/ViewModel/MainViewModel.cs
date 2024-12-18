@@ -9,27 +9,21 @@ namespace Chat0.MVVM.ViewModel
 {
     class MainViewModel
     {
-        public ObservableCollection<Model> Users { get; set; }
+        public ObservableCollection<UserModel> Users { get; set; }
         public ObservableCollection<string> Messages { get; set; }
-
         public string Username { get; set; }
         public string Message { get; set; }
         private Server _server;
 
-        public MainViewModel(string Username)
+        public MainViewModel(string name)
         {
-            Users = new ObservableCollection<Model>();
+            Users = new ObservableCollection<UserModel>();
             Messages = new ObservableCollection<string>();
             _server = new Server();
             _server.connectedEvent += UserConnected;
             _server.msgReceivedEvent += MessageReceived;
             _server.userDisconnectedEvent += RemoveUser;
-            _server.ConnectToServer(Username);
-        }
-
-        public void SendMessage(string Message)
-        {
-            _server.SendMessageToServer(Message);
+            _server.ConnectToServer(name);
         }
 
         private void MessageReceived()
@@ -39,10 +33,16 @@ namespace Chat0.MVVM.ViewModel
             Console.WriteLine(msg);
         }
 
+        public void SendMessage(string message)
+        {
+            _server.SendMessageToServer(message);
+            Messages.Add(message);
+        }
+
 
         private void UserConnected()
         {
-            var user = new Model
+            var user = new UserModel
             {
                 Username = _server.PacketReader.ReadMessage(),
                 UID = _server.PacketReader.ReadMessage()
@@ -50,8 +50,9 @@ namespace Chat0.MVVM.ViewModel
 
             if (!Users.Any(x => x.UID == user.UID))
             {
-               Users.Add(user);
+                Users.Add(user);
             }
+            Console.WriteLine("Connected user list " + user.Username);
         }
 
         private void RemoveUser()
